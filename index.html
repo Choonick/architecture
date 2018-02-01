@@ -4,42 +4,41 @@ layout: default
 
 <section>
 
-    <ul style="text-align: center!important;">
+    {% for post in site.posts %}
+    {% unless post.next %}
+        <h2>{{ post.date | date: '%Y' }} &#172;</h2>
+        <h3>{{ post.date | date: '%b' }} &#172;</h3>
+    {% else %}
+
+
+        {% capture year %}{{ post.date | date: '%Y' }}{% endcapture %}
+        {% capture nyear %}{{ post.next.date | date: '%Y' }}{% endcapture %}
+
+        {% if year != nyear %}
+            <h3>{{ post.date | date: '%Y' }} &#172;</h3>
+            <h3>{{ post.date | date: '%b' }} &#172;</h3>
+        {% else %}
+            {% capture month %}{{ post.date | date: '%b' }}{% endcapture %}
+            {% capture nmonth %}{{ post.next.date | date: '%b' }}{% endcapture %}
+
+            {% if month != nmonth %}
+                <h3>{{ post.date | date: '%b' }} &#172;</h3>
+            {% endif %}
+        {% endif %}
+
+    {% endunless %}
+
+    <ul>
         <li>
-            <div class="title">
-                <a href="https://choonick.github.io/frontend">Angular</a>
+            <div class="post-date">
+                <span>{{ post.date | date: "%b %d" }}</span>
             </div>
-            <div>
-                <p style="color: #adb5bd!important;">angular, angularJS, ionic,...</p>
+            <div class="title">
+                <a href="{{ post.url | prepend: site.baseurl | prepend: site.url }}">{{ post.title }}</a>
             </div>
         </li>
-
-        <li>
-
-            <div class="title">
-                <a href="https://choonick.github.io/etc">Etc...</a>
-            </div>
-            <div>
-                <p style="color: #adb5bd">GIT, ES5, ES6,...</p>
-            </div>
-        </li>
-
-        <li>
-
-            <div class="title">
-                <a href="https://choonick.github.io/one-day-learning/">One-day-learning</a>
-            </div>
-            <div>
-                <p style="color: #adb5bd">develop diary,... </p>
-            </div>
-        </li>
-
-        <li>
-            <div class="title">
-                <a href="https://choonick.github.io/algorithm">Algorithm</a>
-            </div>
-        </li>
-
     </ul>
+
+    {% endfor %}
 
 </section>
